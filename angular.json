@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-15-example": {
+    "ipt-2026-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular-15-example",
+            "outputPath": "dist/ipt-2026-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,15 +68,15 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "angular-15-example:build:development",
+            "buildTarget": "ipt-2026-frontend:build:development",
             "port": 4000
           },
           "configurations": {
             "production": {
-              "buildTarget": "angular-15-example:build:production"
+              "buildTarget": "ipt-2026-frontend:build:production"
             },
             "development": {
-              "buildTarget": "angular-15-example:build:development"
+              "buildTarget": "ipt-2026-frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular-15-example:build"
+            "buildTarget": "ipt-2026-frontend:build"
           }
         },
         "test": {

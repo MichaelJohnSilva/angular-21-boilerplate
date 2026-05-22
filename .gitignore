@@ -4,11 +4,14 @@
 /dist
 /tmp
 /out-tsc
-# Only exists if Bazel was run
 /bazel-out
 
 # Dependencies
 /node_modules
+
+# Environment & secrets — never commit these
+.env
+src/environments/environment.prod.ts
 
 # Profiling files
 chrome-profiler-events*.json
@@ -47,15 +50,5 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Miscellaneous
+# Angular cache
 /.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
-# System files
-.DS_Store
-Thumbs.db
