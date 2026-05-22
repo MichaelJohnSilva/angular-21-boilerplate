@@ -44,8 +44,14 @@ export class ForgotPasswordComponent implements OnInit {
             .pipe(first())
             .pipe(finalize(() => this.loading = false))
             .subscribe({
-                next: () => {
+                next: (res: any) => {
                     this.alertService.success('Please check your email for password reset instructions', { keepAfterRouteChange: true });
+                    if (res && res.resetToken) {
+                        this.router.navigate(['../reset-password'], { 
+                            relativeTo: this.route,
+                            queryParams: { token: res.resetToken } 
+                        });
+                    }
                 },
                 error: error => this.alertService.error(error)
             });
