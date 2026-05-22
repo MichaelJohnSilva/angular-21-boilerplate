@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { finalize, first } from 'rxjs/operators';
 
 import { AccountService, AlertService } from '@app/_services';
+import { Role } from '@app/_models';
 
 @Component({ templateUrl: 'list.component.html', standalone: false })
 export class ListComponent implements OnInit, OnDestroy {
@@ -43,7 +44,7 @@ export class ListComponent implements OnInit, OnDestroy {
             )
             .subscribe({
                 next: accounts => {
-                    this.accounts = accounts;
+                    this.accounts = accounts.filter(x => x.role === Role.User);
                     this.cdr.detectChanges();
                 },
                 error: error => {

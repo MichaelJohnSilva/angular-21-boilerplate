@@ -14,6 +14,8 @@ enum TokenStatus {
 
 @Component({ templateUrl: 'reset-password.component.html', standalone: false })
 export class ResetPasswordComponent implements OnInit {
+    static validatedToken?: string;
+
     TokenStatus = TokenStatus;
     tokenStatus = TokenStatus.Validating;
     token?: string;
@@ -42,14 +44,25 @@ export class ResetPasswordComponent implements OnInit {
         // remove token from url to prevent http referer leakage
         this.router.navigate([], { relativeTo: this.route, replaceUrl: true });
 
+        if (!token) {
+            console.log('Reset Password: No token found in query parameters.');
+            this.tokenStatus = TokenStatus.Invalid;
+            return;
+        }
+
+        console.log('Reset Password: Validating token with backend...', token);
+        this.token = token;
+        this.tokenStatus = TokenStatus.Validating;
+
         this.accountService.validateResetToken(token)
             .pipe(first())
             .subscribe({
                 next: () => {
-                    this.token = token;
+                    console.log('Reset Password: Token validated successfully.');
                     this.tokenStatus = TokenStatus.Valid;
                 },
-                error: () => {
+                error: (err) => {
+                    console.error('Reset Password: Token validation failed:', err);
                     this.tokenStatus = TokenStatus.Invalid;
                 }
             });
@@ -75,6 +88,7 @@ export class ResetPasswordComponent implements OnInit {
             .subscribe({
                 next: () => {
                     this.alertService.success('Password reset successful, you can now login', { keepAfterRouteChange: true });
+                    ResetPasswordComponent.validatedToken = undefined;
                     this.router.navigate(['../login'], { relativeTo: this.route });
                 },
                 error: error => {
